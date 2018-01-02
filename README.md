@@ -34,21 +34,21 @@ as a static variable of the dynamic class.
 
 An abstract syntax tree is a parse tree which is constructed during the parse phase of the compiler. It is then
 annotated with attributes during the type checking and code construction phase. An AST consists of nodes, each node
-representing elements of the input.
+representing elements of the input. <br />
 
-For example : 
+For example :  <br /><br />
 
-int i = j + 1;
+int i = j + 1; <br /><br />
 
-The above statement represents a Declaration_Variable Node. It consists of three attributes: 
-Type - int
-Identifier Name - i
-Expression - Binary_Expression
+The above statement represents a Declaration_Variable Node. It consists of three attributes: <br />
+Type - int <br />
+Identifier Name - i <br />
+Expression - Binary_Expression <br />
 
-Binary_Expression consists of the following three attributes:
-Operator - +
-Expression_Ident - j
-Expression_IntLit - 1
+Binary_Expression consists of the following three attributes: <br />
+Operator - + <br />
+Expression_Ident - j <br />
+Expression_IntLit - 1 <br /> <br />
 
 These nodes are created as we parse the input and build the tree as we go along. In the type checking phase, we calculate the
 types of the more basic nodes and pass it along to the parent nodes. The parent nodes inherit their type
