@@ -5,15 +5,16 @@ The compiler scans, tokenizes, parses and executes the input. It is capable of h
 images of any dimensions, along with manipulating them with a simple and easy to understand syntax.
 
 **A simple example:** <br /><br />
-  image f[1024,1024]; &nbsp;&nbsp;&nbsp;// Declares an image variable f of size 1024 * 1024 <br />
-  i <- @0;            &nbsp;&nbsp;&nbsp;// Reads an image from command line parameters at 0th position <br />
-  image g[1024,1024] = @1;    &nbsp;&nbsp;&nbsp;// Declares an image variable g of size 1024 * 1024
+  ```
+  image f[1024,1024];         // Declares an image variable f of size 1024 * 1024 <br />
+  i <- @0;                    // Reads an image from command line parameters at 0th position <br />
+  image g[1024,1024] = @1;    // Declares an image variable g of size 1024 * 1024
                                   from command line at 1st position <br />
-  image i[1024,1024];    &nbsp;&nbsp;&nbsp;// Declares an image variable f of size 1024 * 1024 <br />
-  i[x,y] = f[x,y] + g[x,y];   &nbsp;&nbsp;&nbsp;// Iterates through every pixel of i, and sets its color value
+  image i[1024,1024];         // Declares an image variable f of size 1024 * 1024 <br />
+  i[x,y] = f[x,y] + g[x,y];   // Iterates through every pixel of i, and sets its color value
                                   to the sum of (ith,jth) pixel in image f and g <br />
-  i -> SCREEN;              &nbsp;&nbsp;&nbsp;  // Displays the image i on the SCREEN. <br />
-
+  i -> SCREEN;                // Displays the image i on the SCREEN. <br />
+````
 The compiler uses an Abstract Syntax Tree to parse the syntax and embed the semantics of the language
 via annotating the syntax tree. The AST is traversed twice using the Visitor Pattern. In the first pass, 
 the tree is annotated for the purpose of type checking. In the second pass, the tree is annotated for 
