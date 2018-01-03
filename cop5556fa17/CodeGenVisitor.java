@@ -252,7 +252,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		mv.visitLabel(falseLabel);
 		mv.visitLdcInsn(new Boolean(false));
 		mv.visitLabel(endLabel);
-		//CodeGenUtils.genLogTOS(GRADE, mv, expression_Binary.getType());
 		return null;
 	}
 
@@ -281,7 +280,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 			default:		throw new UnsupportedOperationException();
 							
 		}
-		//CodeGenUtils.genLogTOS(GRADE, mv, expression_Unary.getType());
 		return null;
 	}
 
@@ -335,39 +333,13 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 		mv.visitLabel(trueExpressionLabel);
 		expression_Conditional.trueExpression.visit(this, arg);
 		mv.visitLabel(goToEnd);
-		//CodeGenUtils.genLogTOS(GRADE, mv, expression_Conditional.trueExpression.getType());
 		return null;
 	}
 
 
 	@Override
 	public Object visitDeclaration_Image(Declaration_Image declaration_Image, Object arg) throws Exception {
-		cw.visitField(ACC_STATIC, declaration_Image.name, ImageSupport.ImageDesc, null, null).visitEnd();
-//		if(declaration_Image.source != null){
-//			declaration_Image.source.visit(this, arg);
-//		}
-//		if(declaration_Image.xSize == null && declaration_Image.ySize == null){
-//			mv.visitFieldInsn(GETSTATIC, className, "defX", "I");
-//			mv.visitFieldInsn(GETSTATIC, className, "defY", "I");
-//		}
-//		else{
-//			declaration_Image.xSize.visit(this, arg);
-//			declaration_Image.ySize.visit(this, arg);
-//		}
-//		if(declaration_Image.source != null){
-//			mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
-//			mv.visitInsn(SWAP);
-//			mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
-//			mv.visitInsn(SWAP);
-//			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "readImage", ImageSupport.readImageSig, false);
-//			mv.visitFieldInsn(PUTSTATIC, className, declaration_Image.name, ImageSupport.ImageDesc);
-//		}
-//		else
-//		{
-//			mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "makeImage", ImageSupport.makeImageSig, false);
-//			mv.visitFieldInsn(PUTSTATIC, className, declaration_Image.name, ImageSupport.ImageDesc);
-//		}
-		
+		cw.visitField(ACC_STATIC, declaration_Image.name, ImageSupport.ImageDesc, null, null).visitEnd();		
 		if(declaration_Image.source != null){
 			declaration_Image.source.visit(this, arg);
 			if(declaration_Image.xSize == null && declaration_Image.ySize == null){
@@ -711,9 +683,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 				
 			case IMAGE:
 				mv.visitFieldInsn(GETSTATIC, className, lhs.name, ImageSupport.ImageDesc);
-//				if(lhs.index != null)
-//					lhs.index.visit(this, arg);
-				
 				mv.visitFieldInsn(GETSTATIC, className, "x", "I");
 				mv.visitFieldInsn(GETSTATIC, className, "y", "I");
 				mv.visitMethodInsn(INVOKESTATIC, ImageSupport.className, "setPixel", ImageSupport.setPixelSig, false);				
@@ -745,7 +714,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 	public Object visitExpression_BooleanLit(Expression_BooleanLit expression_BooleanLit, Object arg) throws Exception {
 		//TODO
 		mv.visitLdcInsn(new Boolean(expression_BooleanLit.value));
-		//CodeGenUtils.genLogTOS(GRADE, mv, Type.BOOLEAN);
 		return null;
 	}
 
@@ -766,7 +734,6 @@ public class CodeGenVisitor implements ASTVisitor, Opcodes {
 			default:
 				break;
 		}
-		//CodeGenUtils.genLogTOS(GRADE, mv, expression_Ident.getType());
 		return null;
 	}
 
