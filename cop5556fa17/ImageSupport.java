@@ -195,7 +195,7 @@ public class ImageSupport {
 	 * @param y
 	 */
 	public static void setPixel(int rgb, BufferedImage image, int x, int y) {
-		if (x < 0 || x >=  image.getWidth() || y < 0 || y >= image.getHeight() ) { System.out.println("pixel out of bounds"); return; }
+		if (x < 0 || x >=  image.getWidth() || y < 0 || y >= image.getHeight() ) { System.out.println("pixel out of bounds " + x + " " + y); return; }
 		image.setRGB(x, y, rgb | 0xFF000000);
 	}
 	
@@ -267,28 +267,32 @@ public class ImageSupport {
 	}
 	
 	/**
-	 * Compares the pixels after masking the alpha component.
-	 * Used for testing.
-	 *   
-	 * @param image1
-	 * @param image2
-	 * @return
-	 */
+	* Compares the pixels after masking the alpha component. Used for testing.
+	* 
+	* @param image1
+	* @param image2
+	* @return
+	*/
 	public static boolean compareImages(BufferedImage image1, BufferedImage image2) {
 		System.out.println(image1.getColorModel());
 		System.out.println(image2.getColorModel());
 		int X = image1.getWidth();
 		int Y = image1.getHeight();
-		if (X != image2.getWidth()) {System.out.println("image widths did not match"); return false; }
-		if (Y != image2.getHeight()) {System.out.println("image heights did not match"); return false; }
-		for (int y = 0; y < 20; y++) {
-		for (int x = 0; x < 20; x++) {
-//			if ( getPixel(image1,x,y) != getPixel(image2,x,y)) {
-//				System.out.println("Image comparison failed at (x,y)=("+x+","+y+"). Expected " 
-//			+ getPixel(image1,x,y) + ", was " + getPixel(image2,x,y) ); 
-////				return false;
-			System.out.println("(x,y)=("+x+","+y+") " + getPixel(image1,x,y) + ", " + getPixel(image2,x,y));
-			
+		if (X != image2.getWidth()) {
+			System.out.println("image widths did not match " + X + "  " + image2.getWidth());
+			return false;
+		}
+		if (Y != image2.getHeight()) {
+			System.out.println("image heights did not match");
+			return false;
+		}
+		for (int y = 0; y < Y; y++) {
+			for (int x = 0; x < X; x++) {
+				if (getPixel(image1, x, y) != getPixel(image2, x, y)) {
+					System.out.println("Image comparison failed at (x,y)=(" + x + "," + y + "). Expected "
+							+ getPixel(image1, x, y) + ", was " + getPixel(image2, x, y));
+					return false;
+				}
 			}
 		}
 		return true;

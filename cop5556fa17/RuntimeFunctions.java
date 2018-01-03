@@ -27,10 +27,8 @@ public class RuntimeFunctions {
 	
 	public static String cart_xSig = "(II)I";
 	public static int cart_x(int r, int theta) {
-		double thetaR = Math.cos(Math.toRadians(theta));
-		double x =  r * Math.cos(thetaR);
-		return  (int)x;
-
+	     double y = r * Math.cos(Math.toRadians(theta));
+	     return (int) y;
 	}
 	
 	public static String cart_ySig = "(II)I";

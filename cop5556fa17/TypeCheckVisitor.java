@@ -145,9 +145,10 @@ public class TypeCheckVisitor implements ASTVisitor {
 			if(index.e0.getClass() == Expression_PredefinedName.class && index.e1.getClass() == Expression_PredefinedName.class){
 				Expression_PredefinedName pd1 = (Expression_PredefinedName)index.e0;
 				Expression_PredefinedName pd2 = (Expression_PredefinedName)index.e1;
-				
 				index.setCartesian(!(pd1.kind == Kind.KW_r && pd2.kind == Kind.KW_a));
 			}
+			else
+				index.setCartesian(!((index.e0.firstToken.kind == Kind.KW_r) && (index.e1.firstToken.kind == Kind.KW_a)));
 			return null;
 		}
 		else
@@ -250,8 +251,8 @@ public class TypeCheckVisitor implements ASTVisitor {
 			Source_CommandLineParam source_CommandLineParam, Object arg)
 			throws Exception {
 		source_CommandLineParam.paramNum.visit(this, arg);
-		source_CommandLineParam.varType = source_CommandLineParam.paramNum.varType;
-		if(source_CommandLineParam.varType != Type.INTEGER){
+		source_CommandLineParam.varType = null;
+		if(source_CommandLineParam.paramNum.varType != Type.INTEGER){
 			throw new SemanticException(source_CommandLineParam.firstToken, "Command Line Paramater Type should be an Integer");
 		}
 		return null;
@@ -281,7 +282,9 @@ public class TypeCheckVisitor implements ASTVisitor {
 		if(!symbolTable.containsKey(name)){
 			symbolTable.put(name, declaration_SourceSink);
 			declaration_SourceSink.varType = TypeUtils.getType(declaration_SourceSink.type);
-			if(declaration_SourceSink.source.varType != declaration_SourceSink.varType){
+			if(declaration_SourceSink.source.varType == null || declaration_SourceSink.source.varType == declaration_SourceSink.varType){
+			
+			}else{
 				throw new SemanticException(declaration_SourceSink.firstToken,"Source/Sink type should match declaration type.");
 			}
 			return null;
@@ -371,8 +374,11 @@ public class TypeCheckVisitor implements ASTVisitor {
 			lhs.visit(this, arg);
 		if(e != null)
 			e.visit(this, arg);
-		if(lhs.varType != e.varType){
-			throw new SemanticException(statement_Assign.firstToken, "Type of LHS and Expression should be the same.");
+		if((lhs.varType == Type.IMAGE && e.varType == Type.INTEGER) || (lhs.varType != Type.IMAGE && lhs.varType == e.varType)){
+			
+		}
+		else{
+			throw new SemanticException(statement_Assign.firstToken, "Incorrect types of LHS and Expression.");
 		}
 		statement_Assign.setCartesian(lhs.isCartesian()); 
 		return null;
